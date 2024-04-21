@@ -66,10 +66,9 @@
                         <div>
                             <h3 class="text-lg font-semibold mb-2">Number of Medicines</h3>
                             <?php
-                            // Replace this with your PHP logic to fetch inventory information from the database
-                            $numberOfMedicines = 100; // Example number of medicines
-
-                            // Display the inventory information
+                            
+                            $numberOfMedicines = 100; 
+                            
                             echo "<p class='text-xl'>$numberOfMedicines</p>";
                             ?>
                         </div>
@@ -81,10 +80,9 @@
                         <div>
                             <h3 class="text-lg font-semibold mb-2">Used Today</h3>
                             <?php
-                            // Replace this with your PHP logic to fetch inventory information from the database
-                            $amountUsedToday = 25; // Example amount used today
-
-                            // Display the inventory information
+                           
+                            $amountUsedToday = 25; 
+                            
                             echo "<p class='text-xl'>$amountUsedToday</p>";
                             ?>
                         </div>
