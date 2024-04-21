@@ -148,7 +148,7 @@ $medicines = fetchMedicines($conn);
 
     <h2 class="text-xl font-semibold mb-2">Medicine List</h2>
     <div class="overflow-x-auto mb-4">
-        <table class="w-full bg-white border border-gray-200">
+        <table class="w-full bg-white border border-gray-200 items-center">
             <thead>
                 <tr class="bg-gray-100">
                     <th class="px-4 py-2 border-b border-gray-200">Medicine ID</th>
@@ -162,7 +162,7 @@ $medicines = fetchMedicines($conn);
             </thead>
             <tbody>
                 <?php while ($row = $medicines->fetch_assoc()) { ?>
-                    <tr>
+                    <tr class ="">
                         <td class="px-4 py-2 border-b border-gray-200"><?php echo $row["MEDICINEID"]; ?></td>
                         <td class="px-4 py-2 border-b border-gray-200"><?php echo $row["NAME"]; ?></td>
                         <td class="px-4 py-2 border-b border-gray-200"><?php echo $row["DISEASE"]; ?></td>
@@ -188,7 +188,7 @@ $medicines = fetchMedicines($conn);
     <div class="modal-backdrop"></div>
     <div class="modal-content bg-gray-500 w-3/4 p-8 rounded-lg shadow-lg">
         <h2 class="text-white text-2xl font-semibold mb-4">Update Medicine</h2>
-        <form action="" method="post" class="grid grid-cols-2 gap-4">
+        <form action="" method="post" class="grid grid-cols-2 gap-4 items-center">
             <input type="hidden" id="updateMedicineId" name="medicineId" placeholder="Medicine ID" class="border border-gray-300 p-2 rounded col-span-2">
 
             <label class="text-white" for="updateName" style="display: block;">Name:</label>
