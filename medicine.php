@@ -136,19 +136,21 @@ $medicines = fetchMedicines($conn);
 
         <main class="flex-1 p-4">
     <h1 class="text-4xl font-mono font-bold mb-4">MEDICINES</h1>
-    <form action="" method="post" class="mb-8">
+    <form action="" method="post" class="mb-8s">
         <h2 class="text-xl font-semibold mb-2">Add Medicine</h2>
-        <input type="text" name="name" placeholder="Name" class="border border-gray-300 p-2 mb-2 rounded" required>
-        <input type="text" name="disease" placeholder="Disease" class="border border-gray-300 p-2 mb-2 rounded" required>
-        <input type="number" name="price" placeholder="Price" class="border border-gray-300 p-2 mb-2 rounded" required>
-        <input type="number" name="quantity" placeholder="Quantity" class="border border-gray-300 p-2 mb-2 rounded" required>
-        <input type="text" name="location" placeholder="Location" class="border border-gray-300 p-2 mb-2 rounded" required>
-        <button type="submit" name="add" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Add Medicine</button>
+        <input type="text" name="name" placeholder="Name" class="border border-gray-300 hover:border-black p-2 mb-2 rounded" required>
+        <input type="text" name="disease" placeholder="Disease" class="border border-gray-300  hover:border-black p-2 mb-2 rounded" required>
+        <input type="number" name="price" placeholder="Price" class="border border-gray-300 hover:border-black p-2 mb-2 rounded" required>
+        <input type="number" name="quantity" placeholder="Quantity" class="border border-gray-300 hover:border-black p-2 mb-2 rounded" required>
+        <input type="text" name="location" placeholder="Location" class="border border-gray-300 hover:border-black p-2 mb-2 rounded" required>
+        <button type="submit" name="add" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-green-600 hover:text-black">Add Medicine</button>
     </form>
 
+
+    <div class="bg-gray-200 text-black w-50% flex flex-col border border-gray-500 rounded">
     <h2 class="text-xl font-semibold mb-2">Medicine List</h2>
     <div class="overflow-x-auto mb-4">
-        <table class="w-full bg-white border border-gray-200 items-center">
+        <table class="mx-9 my-9 w-full border-spacing-6 bg-white border border-gray-200 items-center">
             <thead>
                 <tr class="bg-gray-100">
                     <th class="px-4 py-2 border-b border-gray-200">Medicine ID</th>
@@ -181,6 +183,8 @@ $medicines = fetchMedicines($conn);
             </tbody>
         </table>
     </div>
+    </div>
+    
 </main>
     </div>
 

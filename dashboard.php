@@ -77,21 +77,18 @@
     <div class="bg-white rounded-lg shadow-md p-6">
         <h2 class="text-xl font-semibold mb-4">Dashboard Overview</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Statistics Cards -->
+            
             <div class="bg-purple-100 p-4 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold text-purple-700 mb-2">Total Orders</h3>
+                <h3 class="text-lg font-semibold text-purple-700 mb-2">Total Products</h3>
                 <p class="text-3xl font-bold text-purple-900">950</p>
             </div>
             <div class="bg-indigo-100 p-4 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold text-indigo-700 mb-2">Total Revenue</h3>
+                <h3 class="text-lg font-semibold text-indigo-700 mb-2">Total Medicines</h3>
                 <p class="text-3xl font-bold text-indigo-900">25,000 Pesos</p>
             </div>
-            <div class="bg-yellow-100 p-4 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold text-yellow-700 mb-2">Total Customers</h3>
-                <p class="text-3xl font-bold text-yellow-900">500</p>
-            </div>
+            
         </div>
-        <!-- Stock Status -->
+     
         <div class="mt-8">
             <h3 class="text-lg font-semibold mb-4">Stock Status</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
