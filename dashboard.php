@@ -143,7 +143,7 @@ if ($conn->connect_error) {
 }
 
 
-$sql = "SELECT * FROM medicine WHERE QUANTITY > 30";
+$sql = "SELECT * FROM medicine WHERE QUANTITY > 50";
 $result = $conn->query($sql);
 
 
@@ -185,16 +185,18 @@ $conn->close();
     }
 
     
-    $sql = "SELECT * FROM medicine WHERE QUANTITY < 10";
+    $sql = "SELECT * FROM medicine WHERE QUANTITY < 50";
     $result = $conn->query($sql);
 
     if ($result && $result->num_rows > 0) {
         
         while($row = $result->fetch_assoc()) {
+            echo "<br>";
             echo "<div class='bg-red-100 p-4 rounded-lg shadow-md'>";
             echo "<p class='text-base text-red-900'><strong>" . $row["NAME"] . "</strong></p>";
             echo "<p class='text-sm text-red-700'>(Only " . $row["QUANTITY"] . " stocks left)</p>";
             echo "</div>";
+            echo "<br>";
         }
     } else {
         echo "<p class='text-base text-green-900'>No medicines with low stock</p>";
