@@ -134,26 +134,25 @@ $username = "root";
 $password = "";
 $dbname = "pharmacy";
 
-// Create connection
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Query to fetch medicines that are in stock
+
 $sql = "SELECT * FROM medicine WHERE QUANTITY > 30";
 $result = $conn->query($sql);
 
-// Check if there are any medicines in stock
+
 if ($result->num_rows > 0) {
-    // Output data of each row
+  
     while($row = $result->fetch_assoc()) {
         echo "<br>";
         echo "<div class='bg-green-100 p-4 rounded-lg shadow-md'>";
         echo "<h4 class='text-lg font-semibold text-green-700 mb-2'>" . $row["NAME"] . "</h4>";
-        echo "<p class='text-base text-green-900'>In Stock</p>";
         echo "<p class='text-base text-green-900'>IN STOCK</p>";
         echo "</div>";
         echo "<br>";
@@ -164,34 +163,33 @@ if ($result->num_rows > 0) {
     echo "</div>";
 }
 
-// Close database connection
+
 $conn->close();
 ?>
 </div>
 <div class="bg-red-100 p-4 rounded-lg shadow-md">
     <h4 class="text-lg font-semibold text-red-700 mb-2">Low Stock Alert</h4>
     <?php
-    // Establish database connection (replace with your own connection details)
+    
     $servername = "localhost";
     $username = "root";
     $password = "";
     $dbname = "pharmacy";
 
-    // Create connection
+ 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Check connection
+  
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // Query to fetch medicines with quantities less than 10
+    
     $sql = "SELECT * FROM medicine WHERE QUANTITY < 10";
     $result = $conn->query($sql);
 
-    // Check if there are any medicines with low stock
     if ($result && $result->num_rows > 0) {
-        // Output data of medicines with low stock
+        
         while($row = $result->fetch_assoc()) {
             echo "<div class='bg-red-100 p-4 rounded-lg shadow-md'>";
             echo "<p class='text-base text-red-900'><strong>" . $row["NAME"] . "</strong></p>";
