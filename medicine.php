@@ -9,12 +9,15 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
-function fetchMedicines($conn) {
-    $sql = "SELECT * FROM MEDICINE";
+function fetchMedicines($conn, $search_query = '') {
+    $sql = "SELECT * FROM MEDICINE WHERE ";
+    $sql .= "NAME LIKE '%$search_query%' OR ";
+    $sql .= "LOCATION LIKE '%$search_query%' OR ";
+    $sql .= "MEDICINEID = '$search_query'";
     $result = $conn->query($sql);
     return $result;
 }
+
 
 function addMedicine($conn, $name, $disease, $price, $quantity, $location) {
     $sql = "INSERT INTO MEDICINE (NAME, DISEASE, PRICE, QUANTITY, LOCATION) VALUES ('$name', '$disease', $price, $quantity, '$location')";
@@ -41,7 +44,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-$medicines = fetchMedicines($conn);
+$sql = "SELECT SUM(QUANTITY) AS total_quantity FROM MEDICINE";
+$result = $conn->query($sql);
+
+// Check if query executed successfully
+if ($result) {
+    $row = $result->fetch_assoc();
+    $total_medicine = $row['total_quantity'];
+} else {
+    $total_medicine = "N/A";
+}
+$search_query = isset($_GET['search_query']) ? $_GET['search_query'] : '';
+$medicines = fetchMedicines($conn, $search_query);
 ?>
 
 <!DOCTYPE html>
@@ -136,8 +150,18 @@ $medicines = fetchMedicines($conn);
 
         <main class="flex-1 p-4">
     <h1 class="text-4xl font-mono font-bold mb-4">MEDICINES</h1>
+    <div class="bg-purple-100 p-4 rounded-lg shadow-md">
+    <h3 class="text-lg font-semibold text-purple-700 mb-2">Total Medicines</h3>
+    <p class="text-3xl font-bold text-purple-900"><?php echo $total_medicine; ?></p>
+</div>
+<br>
+<form action="" method="get" class="mb-4">
+    <input type="text" name="search_query" placeholder="Search by Name, Location, or ID" class="border border-gray-300 hover:border-black p-2 rounded">
+    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Search</button>
+</form>
     <form action="" method="post" class="mb-8s">
         <h2 class="text-xl font-semibold mb-2">Add Medicine</h2>
+        
         <input type="text" name="name" placeholder="Name" class="border border-gray-300 hover:border-black p-2 mb-2 rounded" required>
         <input type="text" name="disease" placeholder="Disease" class="border border-gray-300  hover:border-black p-2 mb-2 rounded" required>
         <input type="number" name="price" placeholder="Price" class="border border-gray-300 hover:border-black p-2 mb-2 rounded" required>

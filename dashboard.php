@@ -1,3 +1,34 @@
+<?php
+// Establish database connection (replace with your own connection details)
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "pharmacy";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Query to get total products in medicine table
+$sql = "SELECT COUNT(*) AS total_products FROM medicine";
+$result = $conn->query($sql);
+
+// Check if query executed successfully
+if ($result) {
+    $row = $result->fetch_assoc();
+    $totalProducts = $row['total_products'];
+} else {
+    $totalProducts = "N/A";
+}
+
+// Close database connection
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -78,10 +109,10 @@
         <h2 class="text-xl font-semibold mb-4">Dashboard Overview</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             
-            <div class="bg-purple-100 p-4 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold text-purple-700 mb-2">Total Products</h3>
-                <p class="text-3xl font-bold text-purple-900">950</p>
-            </div>
+        <div class="bg-purple-100 p-4 rounded-lg shadow-md">
+            <h3 class="text-lg font-semibold text-purple-700 mb-2">Total Products</h3>
+            <p class="text-3xl font-bold text-purple-900"><?php echo $totalProducts; ?></p>
+        </div>
             <div class="bg-indigo-100 p-4 rounded-lg shadow-md">
                 <h3 class="text-lg font-semibold text-indigo-700 mb-2">Total Medicines</h3>
                 <p class="text-3xl font-bold text-indigo-900">25,000 Pesos</p>
