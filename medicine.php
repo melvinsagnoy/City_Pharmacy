@@ -12,6 +12,7 @@ if ($conn->connect_error) {
 function fetchMedicines($conn, $search_query = '') {
     $sql = "SELECT * FROM MEDICINE WHERE ";
     $sql .= "NAME LIKE '%$search_query%' OR ";
+    $sql .= "DISEASE LIKE '%$search_query%' OR ";
     $sql .= "LOCATION LIKE '%$search_query%' OR ";
     $sql .= "MEDICINEID = '$search_query'";
     $result = $conn->query($sql);
@@ -47,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $sql = "SELECT SUM(QUANTITY) AS total_quantity FROM MEDICINE";
 $result = $conn->query($sql);
 
-// Check if query executed successfully
+
 if ($result) {
     $row = $result->fetch_assoc();
     $total_medicine = $row['total_quantity'];

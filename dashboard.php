@@ -14,16 +14,18 @@ if ($conn->connect_error) {
 }
 
 // Query to get total products in medicine table
-$sql = "SELECT COUNT(*) AS total_products FROM medicine";
+$sql = "SELECT COUNT(*) AS total_medicine FROM medicine";
 $result = $conn->query($sql);
 
 // Check if query executed successfully
 if ($result) {
     $row = $result->fetch_assoc();
-    $totalProducts = $row['total_products'];
+    $totalmedicine = $row['total_medicine'];
 } else {
-    $totalProducts = "N/A";
+    $totalmedicine = "N/A";
 }
+
+
 
 // Close database connection
 $conn->close();
@@ -43,11 +45,12 @@ $conn->close();
     <div class="flex h-screen">
 
         <!-- Sidebar -->
-        <aside class="bg-gray-800 text-gray-100 w-64 flex flex-col">
+         <!-- Sidebar -->
+         <aside class="bg-gray-800 text-gray-100 w-64 flex flex-col h-full">
             <div class="p-4">
                 <img src="logo.png" alt="City-Pharmacy Logo" class="mb-4">
             </div>
-            <nav class="flex-1">
+            <nav class="flex-1 overflow-y-auto">
                 <ul class="space-y-4">
                     <li>
                         <a href="dashboard.php" class="block py-2 px-4 flex items-center hover:bg-gray-700">
@@ -103,7 +106,6 @@ $conn->close();
             </div>
         </aside>
 
-
         <main class="flex-1 p-4">
     <div class="bg-white rounded-lg shadow-md p-6">
         <h2 class="text-xl font-semibold mb-4">Dashboard Overview</h2>
@@ -111,11 +113,11 @@ $conn->close();
             
         <div class="bg-purple-100 p-4 rounded-lg shadow-md">
             <h3 class="text-lg font-semibold text-purple-700 mb-2">Total Products</h3>
-            <p class="text-3xl font-bold text-purple-900"><?php echo $totalProducts; ?></p>
+            <p class="text-3xl font-bold text-purple-900"><?php echo $totalmedicine; ?></p>
         </div>
             <div class="bg-indigo-100 p-4 rounded-lg shadow-md">
                 <h3 class="text-lg font-semibold text-indigo-700 mb-2">Total Medicines</h3>
-                <p class="text-3xl font-bold text-indigo-900">25,000 Pesos</p>
+                <p class="text-3xl font-bold text-indigo-900"><?php echo $totalmedicine; ?></p>
             </div>
             
         </div>
@@ -123,16 +125,87 @@ $conn->close();
         <div class="mt-8">
             <h3 class="text-lg font-semibold mb-4">Stock Status</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-green-100 p-4 rounded-lg shadow-md">
-                    <h4 class="text-lg font-semibold text-green-700 mb-2">Top Selling Product</h4>
-                    <p class="text-base text-green-900">Aspirin</p>
-                    <p class="text-sm text-green-700">(200 units sold)</p>
-                </div>
-                <div class="bg-red-100 p-4 rounded-lg shadow-md">
-                    <h4 class="text-lg font-semibold text-red-700 mb-2">Low Stock Alert</h4>
-                    <p class="text-base text-red-900">Paracetamol</p>
-                    <p class="text-sm text-red-700">(Only 10 units left)</p>
-                </div>
+            <div class="bg-green-100 p-4 rounded-lg shadow-md">
+    <h4 class="text-lg font-semibold text-green-700 mb-2">IN STOCK MEDICINES</h4>
+    <?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "pharmacy";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Query to fetch medicines that are in stock
+$sql = "SELECT * FROM medicine WHERE QUANTITY > 30";
+$result = $conn->query($sql);
+
+// Check if there are any medicines in stock
+if ($result->num_rows > 0) {
+    // Output data of each row
+    while($row = $result->fetch_assoc()) {
+        echo "<br>";
+        echo "<div class='bg-green-100 p-4 rounded-lg shadow-md'>";
+        echo "<h4 class='text-lg font-semibold text-green-700 mb-2'>" . $row["NAME"] . "</h4>";
+        echo "<p class='text-base text-green-900'>In Stock</p>";
+        echo "<p class='text-base text-green-900'>IN STOCK</p>";
+        echo "</div>";
+        echo "<br>";
+    }
+} else {
+    echo "<div class='bg-red-100 p-4 rounded-lg shadow-md'>";
+    echo "<h4 class='text-lg font-semibold text-red-700 mb-2'>No Medicines in Stock</h4>";
+    echo "</div>";
+}
+
+// Close database connection
+$conn->close();
+?>
+</div>
+<div class="bg-red-100 p-4 rounded-lg shadow-md">
+    <h4 class="text-lg font-semibold text-red-700 mb-2">Low Stock Alert</h4>
+    <?php
+    // Establish database connection (replace with your own connection details)
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "pharmacy";
+
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Query to fetch medicines with quantities less than 10
+    $sql = "SELECT * FROM medicine WHERE QUANTITY < 10";
+    $result = $conn->query($sql);
+
+    // Check if there are any medicines with low stock
+    if ($result && $result->num_rows > 0) {
+        // Output data of medicines with low stock
+        while($row = $result->fetch_assoc()) {
+            echo "<div class='bg-red-100 p-4 rounded-lg shadow-md'>";
+            echo "<p class='text-base text-red-900'><strong>" . $row["NAME"] . "</strong></p>";
+            echo "<p class='text-sm text-red-700'>(Only " . $row["QUANTITY"] . " stocks left)</p>";
+            echo "</div>";
+        }
+    } else {
+        echo "<p class='text-base text-green-900'>No medicines with low stock</p>";
+    }
+
+ 
+    $conn->close();
+    ?>
+</div>
             </div>
         </div>
     </div>
